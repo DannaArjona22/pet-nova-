@@ -1,14 +1,58 @@
+/*
+  PET NOVA — INTERACTIVIDAD (script.js)
+
+  Todo el código está dentro de una función que se ejecuta sola:
+  (function(){ ... })();  → así las variables no chocan con otros scripts.
+
+  PARTES DEL ARCHIVO
+    1. HOME · HERO: croquetas animadas en el canvas
+    2. CURSOR DE PATITA (mouse y clic)
+    3. SISTEMA DE PÁGINAS (router con #)
+    4. HOME · LITTLE PAWS ON THE ROAD (mapa/ubicación animado con el scroll)
+    5. HOME · FUN MOMENTS (polaroids que se arrastran + lightbox + subir foto)
+    6. ABOUT · HIGH FIVE
+    7. HOME · NUESTRA PROMESA (contadores y títulos que se deslizan)
+    8. LOGIN (gato que sigue el cursor, pestañas y carga)
+    9. ANIMACIONES AL HACER SCROLL, CALENDARIO Y LOGO DEL FOOTER
+   10. CONTACT (formulario)
+   11. BOTONES QUE BAJAN A UNA PARTE (data-go) y PRIVACY
+   12. FUNCTIONS · PAW ALERT (demo)
+   13. FUNCTIONS · PET MOMENTS: CARRUSEL tipo historias
+   14. HOME · HERO: efecto al hacer scroll
+*/
 
 (function(){
+
+// ==================================================================
+// 1. HOME · HERO: CROQUETAS ANIMADAS EN EL CANVAS
+//   Las croquetas salen del plato, caen con gravedad y se apartan del mouse.
+//   P = lista de croquetas · IM = imágenes · mx,my = posición del mouse
+// ==================================================================
 var hero=document.getElementById('home'),cv=document.getElementById('cv'),cx=cv.getContext('2d'),bowl=document.getElementById('bowl');
-var SRC=["images/kibble.png", "images/kibble-2.png", "images/kibble-3.png", "images/kibble-4.png", "images/kibble-5.png", "images/kibble-6.png", "images/kibble-7.png", "images/kibble-8.png", "images/kibble-9.png", "images/kibble-10.png", "images/kibble-11.png", "images/kibble-12.png"],IM=[],W=0,H=0,mx=-999,my=-999,P=[],MAX=70,last=0,dpr=Math.min(devicePixelRatio||1,2);
+var SRC=["img pet/kibble.png", "img pet/kibble-2.png", "img pet/kibble-3.png", "img pet/kibble-4.png", "img pet/kibble-5.png", "img pet/kibble-6.png", "img pet/kibble-7.png", "img pet/kibble-8.png", "img pet/kibble-9.png", "img pet/kibble-10.png", "img pet/kibble-11.png", "img pet/kibble-12.png"],IM=[],W=0,H=0,mx=-999,my=-999,P=[],MAX=70,last=0,dpr=Math.min(devicePixelRatio||1,2);
+
+// reduce = true si el usuario pidió "reducir movimiento" en su sistema
 var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// size(): ajusta el canvas al tamaño de la portada
 function size(){var r=hero.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0)}
+
+// spawn(): punto de salida de las croquetas (borde del plato)
 function spawn(){var h=hero.getBoundingClientRect(),b=bowl.getBoundingClientRect();return{x:b.left-h.left+b.width*.34,y:b.top-h.top+b.height*.28}}
+
+// mk(): crea una croqueta con posición, velocidad, giro, tamaño e imagen al azar
 function mk(x,y,vx,vy){return{x:x,y:y,vx:vx,vy:vy,r:Math.random()*6.28,vr:(Math.random()-.5)*.09,s:.75+Math.random()*.7,i:Math.random()*IM.length|0}}
+
+// pour(): una croqueta que sale del plato hacia arriba e izquierda
 function pour(){var s=spawn();return mk(s.x+(Math.random()-.5)*30,s.y,-(.6+Math.random()*1.8),-(1.4+Math.random()*2.4))}
+
+// burst(): explosión de 7 croquetas donde haces clic
 function burst(x,y){for(var i=0;i<7;i++){var a=Math.random()*6.28,v=2+Math.random()*3;P.push(mk(x,y,Math.cos(a)*v,Math.sin(a)*v-1.5))}while(P.length>MAX)P.shift()}
+
+// draw(): dibuja una croqueta girada en el canvas
 function draw(p){var im=IM[p.i],w=54*p.s,h=w*im.naturalHeight/im.naturalWidth;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.drawImage(im,-w/2,-h/2,w,h);cx.restore()}
+
+// frame(): se repite ~60 veces por segundo; mueve, empuja (mouse) y dibuja cada croqueta
 function frame(t){var dt=Math.min((t-last)/16.7||1,2.5);last=t;cx.clearRect(0,0,W,H);
  for(var k=0;k<P.length;k++){var p=P[k];p.vy+=.03*dt;p.vx*=.996;
   var dx=p.x-mx,dy=p.y-my,d=Math.sqrt(dx*dx+dy*dy);
@@ -17,14 +61,22 @@ function frame(t){var dt=Math.min((t-last)/16.7||1,2.5);last=t;cx.clearRect(0,0,
   if(p.y>H+90||p.x<-90||p.x>W+90){P.splice(k,1);k--;continue}
   draw(p)}
  requestAnimationFrame(frame)}
+
+// start(): arranca la animación cuando cargan todas las imágenes
 function start(){size();
  if(reduce){for(var i=0;i<40;i++)P.push(mk(Math.random()*W,Math.random()*H,0,0));P.forEach(draw);return}
  setTimeout(function(){var n=0,iv=setInterval(function(){P.push(pour());if(++n>=10)clearInterval(iv)},550)},1700);
  setInterval(function(){if(P.length<14&&!document.hidden&&scrollY<innerHeight*.6)P.push(pour())},1800);
  requestAnimationFrame(frame)}
+
+// Carga las 12 imágenes de croquetas y luego llama a start()
 var loaded=0;SRC.forEach(function(s){var i=new Image();i.onload=function(){if(++loaded==SRC.length)start()};i.src=s;IM.push(i)});
 addEventListener('resize',size);
-// Mouse, clic y cursor de pata
+
+// ==================================================================
+// 2. CURSOR DE PATITA (mouse y clic)
+//   La imagen #cursor-pata sigue al mouse; al hacer clic en la portada salen croquetas.
+// ==================================================================
 var pata=document.getElementById('cursor-pata'),dn=false;
 function pm(e){pata.style.transform='translate('+e.clientX+'px,'+e.clientY+'px) translate(-50%,-50%) scale('+(dn?.85:1)+')'}
 addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;
@@ -33,8 +85,15 @@ addEventListener('pointerdown',function(e){var r=hero.getBoundingClientRect();dn
  if(e.clientY>=r.top&&e.clientY<=r.bottom&&!reduce)burst(e.clientX-r.left,e.clientY-r.top)});
 addEventListener('pointerup',function(e){dn=false;pata.classList.remove('presionada');pm(e);mx=my=-999});
 document.addEventListener('mouseleave',function(){pata.style.opacity=0;mx=my=-999});
-// Páginas: Contact y Privacy Policy se abren como página aparte
+
+// ==================================================================
+// 3. SISTEMA DE PÁGINAS (router)
+//   Lee el # de la URL (#about, #contact...) y lo guarda en <body data-page>.
+//   El CSS muestra solo las secciones de esa página.
+// ==================================================================
 var curPg='home';
+
+// pourSome(): echa n croquetas seguidas (al volver al Home)
 function pourSome(n){var k=0;clearInterval(iv2);iv2=setInterval(function(){P.push(pour());while(P.length>MAX)P.shift();if(++k>=n)clearInterval(iv2)},420)}
 function route(){var h=location.hash;var pg={'#contact':'contact','#privacy':'privacy','#about':'about','#functions':'functions','#login':'login'}[h]||'home',was=curPg;
  document.body.dataset.page=pg;curPg=pg;document.body.classList.remove('pgfade');void document.body.offsetWidth;document.body.classList.add('pgfade');
@@ -42,15 +101,26 @@ function route(){var h=location.hash;var pg={'#contact':'contact','#privacy':'pr
  requestAnimationFrame(function(){size();var t=h&&h.length>1&&h!=='#home'?document.querySelector(h):null;if(t){t.scrollIntoView()}else{scrollTo(0,0)}
   if(was!=='home'&&!reduce){P.length=0;pourSome(12)}})}
 addEventListener('hashchange',route);route();
-// Escena del gato: el pin cae sobre el gato, el gato rebota y el pin viaja al mapa dejando huellitas
+
+// ==================================================================
+// 4. HOME · LITTLE PAWS ON THE ROAD (mapa/ubicación animado)
+//   El pin cae sobre el gato, el gato rebota y el pin viaja al mapa dejando huellitas.
+//   Todo depende de cuánto has bajado (m va de 0 a 1).
+// ==================================================================
 var road=document.getElementById('road'),rcat=document.getElementById('rcat'),rmap=document.getElementById('rmap'),rpin=document.getElementById('rpin'),rtrail=document.getElementById('rtrail');
 var PAWSVG='<svg viewBox="0 0 24 24"><ellipse cx="12" cy="16" rx="5.2" ry="4.4"/><ellipse cx="5.2" cy="10.2" rx="2.2" ry="2.8"/><ellipse cx="9.3" cy="6" rx="2.2" ry="2.9"/><ellipse cx="14.7" cy="6" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10.2" rx="2.2" ry="2.8"/></svg>';
+
+// Crea las 11 huellitas que siguen al pin
 var NPAW=11,rpaws=[];for(var i=0;i<NPAW;i++){var pw=document.createElement('span');pw.className='r-paw';pw.innerHTML=PAWSVG;rtrail.appendChild(pw);rpaws.push(pw)}
 var catHit=false;
+
+// Funciones de ayuda: seg = progreso de un tramo, ease/ebounce = suavizado y rebote, bez = curva
 function seg(m,a,b){return Math.max(0,Math.min(1,(m-a)/(b-a)))}
 function ease(x){return x*x*(3-2*x)}
 function ebounce(x){var n=7.5625,d=2.75;if(x<1/d)return n*x*x;if(x<2/d)return n*(x-=1.5/d)*x+.75;if(x<2.5/d)return n*(x-=2.25/d)*x+.9375;return n*(x-=2.625/d)*x+.984375}
 function bez(a,b,c,t){var u=1-t;return u*u*a+2*u*t*b+t*t*c}
+
+// roadUpdate(): se ejecuta al hacer scroll y calcula la posición de todo
 function roadUpdate(){var r=road.getBoundingClientRect();if(!r.height)return;var m=Math.max(0,Math.min(1,-r.top/(r.height-innerHeight))),
  a=seg(m,0,.12),d=seg(m,.14,.34),k=ease(seg(m,.5,.78)),k2=ease(seg(m,.56,.84)),t=seg(m,.86,.97),st=road.style;
  st.setProperty('--a',a.toFixed(3));st.setProperty('--k',k.toFixed(3));st.setProperty('--t',t.toFixed(3));st.setProperty('--m',m.toFixed(4));
@@ -70,16 +140,27 @@ function roadUpdate(){var r=road.getBoundingClientRect();if(!r.height)return;var
    rpaws[i].style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+(ang*180/Math.PI+90).toFixed(1)+'deg)';
    rpaws[i].classList.toggle('on',k2>f+.02&&k2<.999||(k2>=.999&&t<.5))}}
 addEventListener('scroll',roadUpdate,{passive:true});addEventListener('resize',roadUpdate);setTimeout(roadUpdate,300);
-// Pet Moments: album de polaroids que se pueden arrastrar, abrir y subir tu propia foto
+
+// ==================================================================
+// 5. HOME · FUN MOMENTS: polaroids que se arrastran, se abren y subir tu foto
+// ==================================================================
 var mo=document.getElementById('moments'),board=document.getElementById('board'),molb=document.getElementById('molb'),zTop=10;
 var moIO=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){mo.classList.add('in');moIO.disconnect()}})},{threshold:.25});moIO.observe(mo);
+
+// Solo se arrastran en pantallas grandes
 function bigScreen(){return innerWidth>760}
+
+// Lightbox: abrir y cerrar la foto en grande (también con la tecla Escape)
 function openLB(el){var im=el.querySelector('img'),cap=el.querySelector('figcaption');if(!im)return;
  molb.querySelector('img').src=im.src;molb.querySelector('img').alt=im.alt;molb.querySelector('figcaption').innerHTML=cap?cap.innerHTML:'';
  molb.classList.add('on');molb.setAttribute('aria-hidden','false')}
 function closeLB(){molb.classList.remove('on');molb.setAttribute('aria-hidden','true')}
 molb.addEventListener('click',closeLB);addEventListener('keydown',function(e){if(e.key==='Escape')closeLB()});
+
+// Tocar una tarjeta: abre la foto o, si es "Add your moment", abre el selector de archivos
 function tapCard(el){if(el.classList.contains('add')){el.querySelector('input').click()}else if(el.classList.contains('pol')){openLB(el)}}
+
+// Arrastrar cada polaroid y sticker con el mouse/dedo
 [].forEach.call(board.querySelectorAll('.pol,.stk'),function(el){
  var sx=0,sy=0,ox=0,oy=0,down=false,moved=false;
  el.addEventListener('pointerdown',function(e){if(e.button>0)return;down=true;moved=false;sx=e.clientX;sy=e.clientY;
@@ -95,13 +176,18 @@ function tapCard(el){if(el.classList.contains('add')){el.querySelector('input').
  el.addEventListener('pointerup',end);el.addEventListener('pointercancel',function(){down=false;el.classList.remove('drag')});
  el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tapCard(el)}});
 });
-// "Add your moment": sube una foto desde tu dispositivo (solo se ve en tu navegador)
+
+// "Add your moment": muestra la foto elegida (solo en tu navegador, no se sube a internet)
 var addCard=board.querySelector('.pol.add');
 if(addCard){addCard.querySelector('input').addEventListener('change',function(){var fl=this.files&&this.files[0];if(!fl)return;
  var ph=addCard.querySelector('.add-ph'),im=document.createElement('img');im.src=URL.createObjectURL(fl);im.alt='Your pet';im.draggable=false;
  ph.parentNode.replaceChild(im,ph);addCard.querySelector('figcaption').innerHTML='My best friend<span>a new moment</span>';addCard.classList.remove('add')})}
 
-// Every high five counts: al tocar, la mano y la patita chocan y salen corazones
+
+// ==================================================================
+// 6. ABOUT · EVERY HIGH FIVE COUNTS
+//   Al tocar: la mano y la patita chocan, sube el contador y salen corazones y patitas.
+// ==================================================================
 var h5=document.getElementById('h5'),h5n=document.getElementById('h5n'),h5c=12480;
 var HEART='<svg viewBox="0 0 24 24"><path d="M12 21.4l-1.5-1.3C5.4 15.4 2 12.3 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.8-3.4 6.9-8.5 11.6L12 21.4z"/></svg>';
 var PAW='<svg viewBox="0 0 24 24"><ellipse cx="12" cy="16" rx="5.2" ry="4.4"/><ellipse cx="5.2" cy="10.2" rx="2.2" ry="2.8"/><ellipse cx="9.3" cy="6" rx="2.2" ry="2.9"/><ellipse cx="14.7" cy="6" rx="2.2" ry="2.9"/><ellipse cx="18.8" cy="10.2" rx="2.2" ry="2.8"/></svg>';
@@ -114,53 +200,95 @@ function highFive(){h5.classList.remove('hit');void h5.offsetWidth;h5.classList.
   p.style.cssText='--s:'+(14+Math.random()*20).toFixed(0)+'px;--c:'+COLS[i%COLS.length]+';--tx:'+(Math.cos(a)*d).toFixed(0)+'px;--ty:'+(Math.sin(a)*d-40).toFixed(0)+'px;--rt:'+((Math.random()-.5)*120).toFixed(0)+'deg';
   h5.appendChild(p);setTimeout(function(x){return function(){x.remove()}}(p),1000)}}
 h5.addEventListener('click',highFive);
+
+// Hace un high five automático la primera vez que el botón aparece en pantalla
 var h5IO=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){setTimeout(highFive,700);h5IO.disconnect()}})},{threshold:.6});h5IO.observe(h5);
 
-// Contadores de la seccion Raised
+
+// ==================================================================
+// 7. HOME · NUESTRA PROMESA: contadores y título animado
+//   Los números (data-to) cuentan desde 0 cuando aparecen en pantalla.
+// ==================================================================
 function cnt(el){var to=+el.dataset.to,dc=+el.dataset.d||0,s0=performance.now();(function f(n){var k=Math.min((n-s0)/1400,1);el.textContent=(to*(1-Math.pow(1-k,3))).toFixed(dc);if(k<1)requestAnimationFrame(f)})(s0)}
 var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cnt(e.target);cio.unobserve(e.target)}})});document.querySelectorAll('[data-to]').forEach(function(e){cio.observe(e)});
-// Titular de Raised: las lineas se deslizan a los lados al bajar
+
+// Las líneas del título se deslizan a los lados al bajar
 var rls=[].slice.call(document.querySelectorAll('.rline'));
 function rlUpdate(){var sct=document.getElementById('intro'),r=sct.getBoundingClientRect();if(!r.height)return;var m=Math.max(0,Math.min(1,(innerHeight-r.top)/(innerHeight+r.height)))-.5;rls.forEach(function(l,i){l.style.translate=(m*(i%2?1:-1)*9*(1+i*.12)).toFixed(2)+'vw 0'})}
 addEventListener('scroll',rlUpdate,{passive:true});rlUpdate();
-// Cargando (gato) y pagina de login (el gato sigue el cursor)
+
+// ==================================================================
+// 8. LOGIN: pantalla de carga, gato que sigue el cursor, pestañas y envío
+// ==================================================================
 function showLoad(ms){var l=document.getElementById('loader');if(!l)return;l.classList.add('on');clearTimeout(window._lt);window._lt=setTimeout(function(){l.classList.remove('on');document.body.classList.add('ready')},ms)}
 function hideLoad(){var l=document.getElementById('loader');if(l)l.classList.remove('on');document.body.classList.add('ready')}
 document.body.classList.add('ready');
+
+// La cabeza y los ojos del gato siguen al mouse
 var lcat=document.getElementById('lcat'),lhead=document.getElementById('lhead'),pps=[].slice.call(document.querySelectorAll('.pp'));
 addEventListener('pointermove',function(e){if(curPg!=='login'||!lcat)return;var r=lcat.getBoundingClientRect(),cx=r.left+r.width*.5,cy=r.top+r.height*.4;
  var ax=Math.max(-1,Math.min(1,(e.clientX-cx)/(innerWidth*.4))),ay=Math.max(-1,Math.min(1,(e.clientY-cy)/(innerHeight*.4)));
  lhead.style.transform='translate('+(ax*14).toFixed(1)+'px,'+(ay*8).toFixed(1)+'px) rotate('+(ax*7).toFixed(1)+'deg)';
  pps.forEach(function(q){q.style.transform='translate('+(ax*8).toFixed(1)+'px,'+(ay*6).toFixed(1)+'px)'})});
+
+// Pestañas "Log in" / "Create account" y animación de carga al enviar
 var lf=document.getElementById('lf');
 [].forEach.call(lf.querySelectorAll('.tabs button'),function(b){b.addEventListener('click',function(){[].forEach.call(lf.querySelectorAll('.tabs button'),function(x){x.classList.toggle('on',x===b)});lf.classList.toggle('up',b.dataset.t==='up');document.getElementById('lgo').textContent=b.dataset.t==='up'?'Create account':'Log in'})});
 lf.addEventListener('submit',function(e){e.preventDefault();lf.classList.add('loading');setTimeout(function(){lf.classList.remove('loading');location.hash='#home'},2400)});
+
+// Animación de listas (Info y Paw Alert) cuando aparecen en pantalla
 document.querySelectorAll('.clip,.pa-art').forEach(function(el){new IntersectionObserver(function(es,o){if(es[0].isIntersecting){el.classList.add('in');o.disconnect()}},{threshold:.3}).observe(el)});
-// Resto de la página
+
+// ==================================================================
+// 9. ANIMACIONES AL HACER SCROLL, CALENDARIO Y LOGO DEL FOOTER
+// ==================================================================
 document.documentElement.classList.add('js');
+
+// IntersectionObserver: agrega la clase .in a cada .rv cuando aparece en pantalla
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
 document.querySelectorAll('.rv').forEach(function(e){io.observe(e)});
+
+// Calendario de octubre: crea los días; los días 17, 22 y 30 se marcan
 var dv=document.getElementById('days'),hh='';['M','T','W','T','F','S','S'].forEach(function(l){hh+='<span style="opacity:.5">'+l+'</span>'});
 for(var i=0;i<3;i++)hh+='<span></span>';for(var j=1;j<=31;j++)hh+='<span class="'+(j==17||j==22||j==30?'h':'')+'">'+j+'</span>';if(dv)dv.innerHTML=hh;
+
+// El footer usa la misma imagen del logo del menú
 document.getElementById('flogo').src=document.querySelector('.logo img').src;
-// Contact: temas, mensaje enviado y "enviar otro"
+
+// ==================================================================
+// 10. CONTACT: temas, mensaje enviado y "enviar otro"
+//   El formulario no se envía de verdad: solo muestra el mensaje de gracias.
+// ==================================================================
 var cf=document.getElementById('f');
 [].forEach.call(document.querySelectorAll('#ctt button'),function(b){b.addEventListener('click',function(){[].forEach.call(document.querySelectorAll('#ctt button'),function(x){x.classList.toggle('on',x===b)})})});
 cf.addEventListener('submit',function(e){e.preventDefault();var n=document.getElementById('fn1').value.trim();
  document.getElementById('ctmsg').textContent='Thanks'+(n?', '+n:'')+'! We\'ll get back to you very soon.';cf.classList.add('sent')});
 document.getElementById('ctnew').addEventListener('click',function(){cf.reset();cf.classList.remove('sent')});
-// Botones que bajan a una parte de la pagina sin cambiar de pagina (Functions y Privacy)
+
+// ==================================================================
+// 11. BOTONES QUE BAJAN A UNA PARTE (data-go) y PRIVACY
+// ==================================================================
 [].forEach.call(document.querySelectorAll('[data-go]'),function(b){b.addEventListener('click',function(){var t=document.getElementById(b.dataset.go);if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})})});
-// Privacy: el indice marca la seccion que estas leyendo
+
+// Privacy: el índice marca la sección que estás leyendo
 var pvb=[].slice.call(document.querySelectorAll('#pvtoc button'));
 var pvio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){pvb.forEach(function(b){b.classList.toggle('on',b.dataset.go===e.target.id)})}})},{rootMargin:'-40% 0px -55% 0px'});
 document.querySelectorAll('.pv-s').forEach(function(s){pvio.observe(s)});
-// Paw Alert: demo de la alerta
+
+// ==================================================================
+// 12. FUNCTIONS · PAW ALERT (demo)
+//   El botón activa/desactiva la clase .alerting (animación de alerta).
+// ==================================================================
 var paart=document.getElementById('paart'),pabtn=document.getElementById('pabtn');
 pabtn.addEventListener('click',function(){var on=!paart.classList.contains('alerting');paart.classList.toggle('alerting',on);
  pabtn.innerHTML=on?'<i class="ms">check_circle</i> I found my pet':'<i class="ms">campaign</i> Try Paw Alert';
  if(on){paart.classList.remove('in');void paart.offsetWidth;paart.classList.add('in')}});
-// Pet Moments (Functions): historias que avanzan solas, tocar para pasar y dar like
+
+// ==================================================================
+// 13. FUNCTIONS · PET MOMENTS: CARRUSEL tipo historias
+//   Cambia de foto cada 4 s (DUR). Se pausa con el mouse encima.
+//   show(i) = muestra la foto i · plan() = programa la siguiente · heart() = corazón de like
+// ==================================================================
 (function(){var st=document.getElementById('story');if(!st)return;
  var ims=[].slice.call(st.querySelectorAll('.st-imgs img')),bars=[].slice.call(st.querySelectorAll('.st-bars i')),cur=0,tm=null,DUR=4000,vis=false,left=DUR,t0=0;
  var nm=document.getElementById('stn'),tt=document.getElementById('stt'),lk=document.getElementById('stlike');
@@ -179,7 +307,11 @@ pabtn.addEventListener('click',function(){var on=!paart.classList.contains('aler
  st.style.setProperty('--dur',DUR/1000+'s');
  new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis)show(cur);else clearTimeout(tm)},{threshold:.4}).observe(st)})();
 
-// Scroll: las letras se separan y el beagle baja
+
+// ==================================================================
+// 14. HOME · HERO: efecto al hacer scroll
+//   --p (0 a 1) separa las letras y baja al beagle; al volver arriba caen croquetas.
+// ==================================================================
 var away=false,iv2;
 addEventListener('scroll',function(){var p=Math.min(scrollY/innerHeight,1);hero.style.setProperty('--p',p.toFixed(3));
  if(p>.6)away=true;
