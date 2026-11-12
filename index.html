@@ -169,4 +169,183 @@
 <section class="sec fmo" id="fn-moments" data-p="functions">
   <div class="fmo-in">
     <div class="fmo-t rv"><span class="fn-no">05 — Pet Moments</span><h2 class="big">Your pet's story, one moment at a time</h2>
-      <p class="lead">Photos of every adventure and every ordinary day together: memories to keep forever. Watch them
+      <p class="lead">Photos of every adventure and every ordinary day together: memories to keep forever. Watch them like stories and share them with the people you love.</p>
+      <ul class="fmo-list">
+        <li style="--k:0"><i class="ms">photo_library</i><div><b>Digital album</b><small>Every photo saved by pet and by date.</small></div></li>
+        <li style="--k:1"><i class="ms">auto_stories</i><div><b>Pet stories</b><small>Relive the best moments, one tap at a time.</small></div></li>
+        <li style="--k:2"><i class="ms">group</i><div><b>Share with family</b><small>Everyone at home can add photos.</small></div></li>
+        <li style="--k:3"><i class="ms">cake</i><div><b>Birthday memories</b><small>A surprise album on their special day.</small></div></li>
+      </ul></div>
+    <div class="fmo-art rv">
+      <i class="fmo-blob"></i>
+      <div class="story" id="story" tabindex="0" aria-label="Pet Moments stories: tap the right side for the next photo">
+        <div class="st-bars"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+        <div class="st-head"><span class="st-av"><i class="ms">pets</i></span><b id="stn">Luna &amp; Simba</b><small id="stt">2h</small></div>
+        <div class="st-imgs"><img src="img pet/momento-abrazo-de-gatitos.webp" alt="Chica abrazando a sus dos gatos atigrados" data-n="Luna &amp; Simba" data-t="2h" class="on"><img src="img pet/momento-perro-comiendo-espagueti.webp" alt="Perrito blanco y negro comiendo un espagueti" data-n="Chispa" data-t="3h"><img src="img pet/momento-golden-en-el-carro.webp" alt="Niño con su cachorro golden en el carro" data-n="Sunny" data-t="5h"><img src="img pet/momento-perrito-con-gorro.webp" alt="Perro con gorro de pavo" data-n="Toby" data-t="8h"><img src="img pet/momento-siesta-con-golden.webp" alt="Niña dormida abrazada a su golden" data-n="Honey" data-t="12h"><img src="img pet/momento-boyero-en-el-carro.webp" alt="Niña con su boyero de Berna en el carro" data-n="Bruno" data-t="1d"><img src="img pet/momento-boyero-en-la-cocina.webp" alt="Chica con su boyero de Berna en la cocina" data-n="Max" data-t="2d"></div>
+        <button class="st-nav st-prev" type="button" aria-label="Previous photo"></button><button class="st-nav st-next" type="button" aria-label="Next photo"></button>
+        <div class="st-foot"><span>Send a message...</span><button type="button" class="st-like" id="stlike" aria-label="Like"><i class="ms">favorite</i></button><i class="ms">send</i></div>
+      </div>
+      <div class="fmo-tip"><i class="ms">touch_app</i> Tap the photo</div>
+    </div>
+  </div>
+  <div class="fmo-strip" aria-hidden="true"><div class="fmo-track"><img src="img pet/momento-perro-comiendo-espagueti.webp" alt=""><img src="img pet/momento-perro-con-cartel-pet-nova.webp" alt=""><img src="img pet/momento-abrazo-de-gatitos.webp" alt=""><img src="img pet/momento-golden-en-el-carro.webp" alt=""><img src="img pet/momento-perrito-con-gorro.webp" alt=""><img src="img pet/momento-siesta-con-golden.webp" alt=""><img src="img pet/momento-boyero-en-el-carro.webp" alt=""><img src="img pet/momento-boyero-en-la-cocina.webp" alt=""><img src="img pet/familia-con-sus-perros.webp" alt=""><img src="img pet/momento-perro-comiendo-espagueti.webp" alt=""><img src="img pet/momento-perro-con-cartel-pet-nova.webp" alt=""><img src="img pet/momento-abrazo-de-gatitos.webp" alt=""><img src="img pet/momento-golden-en-el-carro.webp" alt=""><img src="img pet/momento-perrito-con-gorro.webp" alt=""><img src="img pet/momento-siesta-con-golden.webp" alt=""><img src="img pet/momento-boyero-en-el-carro.webp" alt=""><img src="img pet/momento-boyero-en-la-cocina.webp" alt=""><img src="img pet/familia-con-sus-perros.webp" alt=""></div></div>
+</section>
+
+<!-- ===== PÁGINA: HOME (continúa) ===== -->
+<!-- HOME · LITTLE PAWS ON THE ROAD — MAPA / UBICACIÓN animado -->
+<section class="road" id="road" data-p="home">
+  <div class="road-in">
+    <div class="r-bgtxt" aria-hidden="true"><span>LITTLE PAWS · ON THE ROAD · LITTLE PAWS · ON THE ROAD ·</span></div>
+    <i class="r-dot d1"></i><i class="r-dot d2"></i><i class="r-dot d3"></i>
+    <div class="r-copy"><span class="r-step">Pet Map</span><h2>Little Paws On The Road</h2><p class="r-sub">Every paw leaves a trace. Follow it.</p></div>
+    <div class="r-trail" id="rtrail" aria-hidden="true"></div>
+    <i class="r-shadow"></i>
+    <img class="r-cat" id="rcat" src="img pet/gato-blanco-y-negro-sentado.webp" alt="Gato blanco y negro sentado">
+    <div class="r-map" id="rmap"><div class="mapcard">
+      <svg class="r-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M39 52 C34 40 30 30 22 22"/></svg>
+      <div class="chip" style="left:8%;top:12%;--c:0"><span class="ms">local_hospital</span> Veterinaria Melo Pet &amp; Garden</div>
+      <div class="chip" style="right:6%;top:62%;animation-delay:-1s;--c:1"><span class="ms">storefront</span> Plaza Pompeya</div>
+      <div class="chip" style="left:10%;bottom:8%;animation-delay:-2s;--c:2"><span class="ms">park</span> Parque Sandalo</div>
+      <i class="r-ripple"></i><i class="r-ripple q2"></i>
+      <div class="r-info"><b>Veterinaria Melo</b><small><span class="ms">directions_walk</span> 350 m · <em>Open now</em></small></div>
+      <small class="mcap">Map · Powered by Mapify</small></div></div>
+    <svg class="r-pin" id="rpin" viewBox="0 0 100 130" aria-hidden="true"><path d="M50 128C50 128 8 84 8 48a42 42 0 1 1 84 0c0 36-42 80-42 80z" fill="#523f7a"/><circle cx="50" cy="48" r="22" fill="#2bd3e3"/></svg>
+    <div class="r-cta"><div class="r-stats"><b>120+</b><small>pet-friendly places<br>near you</small></div><div class="r-stats"><b>24/7</b><small>emergency vets<br>on the map</small></div><a class="btn dk" href="#contact">Find nearby</a></div>
+  </div>
+</section>
+
+<!-- HOME · FUN MOMENTS: polaroids que se arrastran y se abren en grande -->
+<section class="moments" id="moments" data-p="home">
+  <div class="mo-card" id="board">
+    <div class="mo-grid"></div>
+    <div class="mo-top"><span class="mo-badge">Pet Moments · Free to share</span><h2>Fun Moments<br>With Your Pets</h2><p>Photos of every adventure and every ordinary day together: memories to keep forever. Save them in your digital album and relive them anytime.</p></div>
+    <figure class="pol" tabindex="0" style="--x:3%;--y:8%;--r:-9deg;--d:0"><div class="pol-in"><i class="tape"></i><img src="img pet/momento-abrazo-de-gatitos.webp" alt="Chica abrazando a sus dos gatos atigrados" draggable="false"><figcaption>Luna &amp; Simba<span>double cuddles</span></figcaption></div></figure>
+    <figure class="pol" tabindex="0" style="--x:81%;--y:6%;--r:8deg;--d:1"><div class="pol-in"><i class="tape"></i><img src="img pet/momento-perrito-con-gorro.webp" alt="Perro con gorro de pavo y un juguete" draggable="false"><figcaption>Toby<span>party hat day</span></figcaption></div></figure>
+    <figure class="pol" tabindex="0" style="--x:6%;--y:50%;--r:6deg;--d:2"><div class="pol-in"><i class="tape"></i><img src="img pet/momento-golden-en-el-carro.webp" alt="Niño recostado con su cachorro golden en el carro" draggable="false"><figcaption>Sunny<span>road trip buddy</span></figcaption></div></figure>
+    <figure class="pol" tabindex="0" style="--x:25%;--y:43%;--r:-5deg;--d:3"><div class="pol-in"><i class="tape"></i><img src="img pet/momento-perro-con-cartel-pet-nova.webp" alt="Perro blanco y negro posando en el marco de Pet Nova" draggable="false"><figcaption>Oreo<span>proud Pet Nova pup</span></figcaption></div></figure>
+    <figure class="pol" tabindex="0" style="--x:44%;--y:50%;--r:3deg;--d:4"><div class="pol-in"><i class="tape"></i><img src="img pet/momento-siesta-con-golden.webp" alt="Niña dormida abrazada a su golden" draggable="false"><figcaption>Honey<span>nap time hugs</span></figcaption></div></figure>
+    <figure class="pol" tabindex="0" style="--x:62%;--y:42%;--r:-6deg;--d:5"><div class="pol-in"><i class="tape"></i><img src="img pet/momento-boyero-en-la-cocina.webp" alt="Chica sacando la lengua junto a su boyero de Berna" draggable="false"><figcaption>Max<span>silly faces club</span></figcaption></div></figure>
+    <figure class="pol add" tabindex="0" style="--x:80%;--y:51%;--r:5deg;--d:6"><div class="pol-in"><i class="tape"></i><div class="add-ph"><i class="ms">add_a_photo</i>Add your moment</div><figcaption>Your pet<span>tap to upload</span></figcaption><input type="file" accept="image/*" hidden></div></figure>
+    <img class="stk" src="img pet/tarjeta-animal-4.webp" alt="" draggable="false" style="--x:18%;--y:19%;--r:-8deg;--w:92px;--d:7">
+    <img class="stk" src="img pet/tarjeta-animal-0.webp" alt="" draggable="false" style="--x:71%;--y:27%;--r:10deg;--w:108px;--d:8">
+    <img class="stk" src="img pet/tarjeta-animal-2.webp" alt="" draggable="false" style="--x:36%;--y:79%;--r:-6deg;--w:128px;--d:9">
+    <p class="mo-hint"><i class="ms">pan_tool</i> Drag the photos around · tap one to open it</p>
+    <div class="mo-flash"></div>
+  </div>
+  <div class="mo-lb" id="molb" aria-hidden="true"><figure><button type="button" class="lb-x" aria-label="Close"><i class="ms">close</i></button><img alt=""><figcaption></figcaption></figure></div>
+</section>
+
+
+<!-- ===== PÁGINA: CONTACT ===== -->
+<!-- CONTACT: tarjetas de contacto (UBICACIÓN, teléfono, correo), FORMULARIO y FAQ -->
+<section class="sec contact" id="contact" data-p="contact">
+  <i class="ct-blob b1"></i><i class="ct-blob b2"></i>
+  <div class="ct-in">
+    <div class="ct-l rv">
+      <span class="mo-badge">Contact</span>
+      <h2 class="big">Let's talk about your pets</h2>
+      <p class="lead">If you have any questions about our services or any problem, reach out to us and contact us today.</p>
+      <div class="ct-cards">
+        <a class="ct-card" href="https://www.google.com/maps/search/La+Chorrera,+Panam%C3%A1+Oeste" target="_blank" rel="noopener"><i class="ms">location_on</i><div><small>Visit us</small><b>La Chorrera, Panamá Oeste, Panamá</b></div></a>
+        <a class="ct-card" href="tel:1234567890"><i class="ms">call</i><div><small>Call us</small><b>123-456-7890</b></div></a>
+        <a class="ct-card" href="mailto:petnovitas2027@gmail.com"><i class="ms">mail</i><div><small>Write to us</small><b>petnovitas2027@gmail.com</b></div></a>
+      </div>
+      <p class="ct-resp"><i class="ms">schedule</i> We usually reply in less than 24 hours</p>
+    </div>
+    <div class="fw rv"><img class="peek pup" src="img pet/cachorro-cocker.webp" alt="Cachorro descansando sobre la tarjeta">
+      <form id="f">
+        <h3>Send us a message</h3>
+        <div class="ct-topics" id="ctt"><button type="button" class="on">General question</button><button type="button">Problem with the app</button><button type="button">Partnership</button></div>
+        <div class="ct-row"><input id="fn1" placeholder="First name" required><input placeholder="Last name"></div>
+        <input type="email" placeholder="Email" required>
+        <input placeholder="Your pet's name (optional)">
+        <textarea rows="4" placeholder="Message"></textarea>
+        <button class="btn dk" id="fb" type="submit"><i class="ms">send</i> Send message</button>
+        <div class="ct-ok" id="ctok"><span class="ct-okic"><i class="ms">pets</i></span><b>Message sent!</b><p id="ctmsg">Thanks! We'll get back to you very soon.</p><button type="button" class="btn" id="ctnew">Send another</button></div>
+      </form></div>
+  </div>
+  <div class="faq rv">
+    <h3>Frequently asked questions</h3>
+    <details><summary>Is Pet Nova free?<i class="ms">add</i></summary><p>Yes. You can create your account, add your pets and use the main functions for free.</p></details>
+    <details><summary>Can I add more than one pet?<i class="ms">add</i></summary><p>Of course! Each pet gets its own profile, medical history, calendar and photo album.</p></details>
+    <details><summary>How does Paw Alert work?<i class="ms">add</i></summary><p>If your pet gets lost, you activate the alert. People of the Pet Nova community near you get a notification with your pet's photo and last seen location.</p></details>
+    <details><summary>Is my information safe?<i class="ms">add</i></summary><p>We never sell your data. Read our <a href="#privacy">Privacy Policy</a> to see what we collect and how we use it.</p></details>
+  </div>
+</section>
+
+
+<!-- ===== PÁGINA: PRIVACY POLICY ===== -->
+<!-- PRIVACY POLICY: resumen, índice lateral y 6 secciones -->
+<section class="sec priv" id="privacy" data-p="privacy">
+  <div class="pv-hero">
+    <div class="rv"><span class="mo-badge pv-badge">Privacy Policy</span><h2 class="big">Your pet's data is safe with us</h2><p class="lead">We only collect what we need to care for your pet, and you are always in control.</p><small class="pv-upd"><i class="ms">update</i> Last updated: November 2026</small></div>
+    <div class="pv-art rv"><span class="pv-disc"></span><img src="img pet/mano-y-patita-estrechandose.webp" alt="Mano y patita estrechándose"><span class="pv-lock"><i class="ms">lock</i></span></div>
+  </div>
+  <div class="pv-sum">
+    <div class="pv-card rv"><i class="ms">block</i><b>We never sell your data</b><small>Not to advertisers, not to anyone.</small></div>
+    <div class="pv-card rv"><i class="ms">toggle_on</i><b>You're in control</b><small>See, edit or delete your info anytime.</small></div>
+    <div class="pv-card rv"><i class="ms">share_location</i><b>Shared only when you choose</b><small>Like when you activate a Paw Alert.</small></div>
+  </div>
+  <div class="pv-body">
+    <nav class="pv-toc" id="pvtoc"><button type="button" data-go="pv-1" class="on"><span>01</span>What we collect</button><button type="button" data-go="pv-2"><span>02</span>How we use it</button><button type="button" data-go="pv-3"><span>03</span>Who can see it</button><button type="button" data-go="pv-4"><span>04</span>How we protect it</button><button type="button" data-go="pv-5"><span>05</span>Your rights</button><button type="button" data-go="pv-6"><span>06</span>Contact us</button></nav>
+    <div class="pv-secs"><article class="pv-s rv" id="pv-1"><span class="pv-n">01</span><div><h3><i class="ms">inventory_2</i>What we collect</h3><p>Your name, email, and the information you add about your pets: profile, photos, vaccines, medical records and last seen locations.</p></div></article><article class="pv-s rv" id="pv-2"><span class="pv-n">02</span><div><h3><i class="ms">tune</i>How we use it</h3><p>To run the app: show your pet's history, send care reminders, activate Paw Alerts and show nearby services on the map.</p></div></article><article class="pv-s rv" id="pv-3"><span class="pv-n">03</span><div><h3><i class="ms">share_location</i>Who can see it</h3><p>Your information is private. When you activate a Paw Alert, people of the community near you can see your pet's photo and last seen location until you turn the alert off.</p></div></article><article class="pv-s rv" id="pv-4"><span class="pv-n">04</span><div><h3><i class="ms">lock</i>How we protect it</h3><p>Your account is protected with a password and your information travels through secure connections. Only the Pet Nova team can access it to help you.</p></div></article><article class="pv-s rv" id="pv-5"><span class="pv-n">05</span><div><h3><i class="ms">verified_user</i>Your rights</h3><p>You can ask to see, correct or delete your information at any time. You can also delete your account whenever you want.</p></div></article><article class="pv-s rv" id="pv-6"><span class="pv-n">06</span><div><h3><i class="ms">mail</i>Contact us</h3><p>Questions about your privacy? Write to us at petnovitas2027@gmail.com and we will answer you.</p></div></article>
+      <p class="pv-note"><i class="ms">info</i> Sample text: review it with a professional before publishing.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== PÁGINA: LOGIN ===== -->
+<!-- LOGIN: gato que sigue el cursor y formulario (sin menú ni footer) -->
+<section class="login" id="login" data-p="login">
+  <div class="lg-bg"></div>
+  <div class="lg-in">
+    <div class="lg-l">
+      <a class="lg-logo" href="#home">🐾 PET NOVA</a>
+      <span class="mo-badge">Pet care community</span>
+      <h1>Welcome back</h1><p>Log in to Pet Nova</p>
+    </div>
+    <div class="lcat" id="lcat"><svg viewBox="0 0 400 420" aria-hidden="true">
+  <path d="M50 420C50 330 110 285 200 285s150 45 150 135z" fill="#fff" stroke="#e8e2f7" stroke-width="3"/>
+  <ellipse cx="140" cy="408" rx="34" ry="22" fill="#fff" stroke="#e8e2f7" stroke-width="3"/><ellipse cx="260" cy="408" rx="34" ry="22" fill="#fff" stroke="#e8e2f7" stroke-width="3"/>
+  <g id="lhead">
+    <path d="M92 130L116 22L196 92z" fill="#fff" stroke="#e8e2f7" stroke-width="3" stroke-linejoin="round"/><path d="M112 108L124 56L168 94z" fill="#e8e2f7"/>
+    <path d="M308 130L284 22L204 92z" fill="#fff" stroke="#e8e2f7" stroke-width="3" stroke-linejoin="round"/><path d="M288 108L276 56L232 94z" fill="#e8e2f7"/>
+    <ellipse cx="200" cy="172" rx="130" ry="108" fill="#fff" stroke="#e8e2f7" stroke-width="3"/>
+    <ellipse cx="118" cy="214" rx="26" ry="15" fill="#c9bff0" opacity=".55"/><ellipse cx="282" cy="214" rx="26" ry="15" fill="#c9bff0" opacity=".55"/>
+    <g class="blink"><circle cx="146" cy="162" r="31" fill="#fff" stroke="#e8e2f7" stroke-width="3"/><g class="pp"><circle cx="146" cy="162" r="21" fill="#0cbddc"/><circle cx="146" cy="162" r="10" fill="#523f7a"/><circle cx="152" cy="155" r="4" fill="#fff"/></g></g>
+    <g class="blink"><circle cx="254" cy="162" r="31" fill="#fff" stroke="#e8e2f7" stroke-width="3"/><g class="pp"><circle cx="254" cy="162" r="21" fill="#0cbddc"/><circle cx="254" cy="162" r="10" fill="#523f7a"/><circle cx="260" cy="155" r="4" fill="#fff"/></g></g>
+    <path d="M187 201h26l-13 14z" fill="#8268d5" stroke="#8268d5" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M200 215v10M200 225c-9 11-23 9-30 1M200 225c9 11 23 9 30 1" fill="none" stroke="#523f7a" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M118 208L50 196M118 220L46 224M282 208L350 196M282 220L354 224" stroke="#c9bff0" stroke-width="3" stroke-linecap="round"/>
+  </g></svg></div>
+    <form class="lg-card" id="lf">
+      <div class="tabs"><button type="button" class="on" data-t="in">Log in</button><button type="button" data-t="up">Create account</button></div>
+      <label class="sg">Name<input placeholder="Your name"></label>
+      <label>Email<input type="email" placeholder="you@email.com" required></label>
+      <label>Password<input type="password" placeholder="••••••••" required></label>
+      <label class="rm"><input type="checkbox"> Remember password</label>
+      <button class="btn dk lg-go" type="submit" id="lgo">Log in</button>
+      <div class="lg-load"><div class="cl"><div class="clh"><i class="e1"></i><i class="e2"></i><b></b></div><div class="clb"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i><i style="--i:12"></i><i style="--i:13"></i></div></div><p>Logging in<span>.</span><span>.</span><span>.</span></p></div>
+    </form>
+  </div>
+</section>
+</main>
+<!-- FIN DEL MAIN -->
+
+<!-- FOOTER — logo, dirección, teléfono y redes sociales -->
+<footer class="ft">
+  <img id="flogo" alt="Pet Nova — We Care For What You Love">
+  <div>La Chorrera, Panamá Oeste, Panamá<br><a href="mailto:petnovitas2027@gmail.com">petnovitas2027@gmail.com</a></div>
+  <div>123-456-7890<br><a href="#privacy">Privacy Policy</a></div>
+  <div class="ft-soc"><a href="https://www.facebook.com/" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8.5V6.8c0-.8.5-1.3 1.3-1.3H17V2.2h-2.6C11.8 2.2 10.5 4 10.5 6.4v2.1H8v3.3h2.5V22H14V11.8h2.6l.4-3.3z"/></svg></a><a href="https://www.instagram.com/" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm4.9-8.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2zM21.9 7.8c-.1-1.6-.4-3-1.6-4.1S17.7 2.2 16.2 2.1C14.6 2 9.4 2 7.8 2.1 6.3 2.2 4.9 2.5 3.7 3.7S2.2 6.3 2.1 7.8C2 9.4 2 14.6 2.1 16.2c.1 1.6.4 3 1.6 4.1s2.6 1.5 4.1 1.6c1.6.1 6.8.1 8.4 0 1.6-.1 3-.4 4.1-1.6s1.5-2.6 1.6-4.1c.1-1.6.1-6.8 0-8.4zm-2 10.2a3.4 3.4 0 0 1-1.9 1.9c-1.3.5-4.4.4-5.9.4s-4.6.1-5.9-.4A3.4 3.4 0 0 1 4.3 18c-.5-1.3-.4-4.4-.4-5.9s-.1-4.6.4-5.9A3.4 3.4 0 0 1 6.2 4.3c1.3-.5 4.4-.4 5.9-.4s4.6-.1 5.9.4a3.4 3.4 0 0 1 1.9 1.9c.5 1.3.4 4.4.4 5.9s.1 4.6-.4 5.9z"/></svg></a><a href="https://www.tiktok.com/" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-1.8-2.5V9.7a5.7 5.7 0 1 0 4.9 5.7V9.1a7.3 7.3 0 0 0 4.3 1.4V7.4a4.3 4.3 0 0 1-3.2-1.6z"/></svg></a></div>
+  <small>© 2026 PetNova by PetNovitasTeam · We Care For What You Love</small>
+</footer>
+
+<!-- Cursor personalizado de patita -->
+<img id="cursor-pata" alt="" src="img pet/pata-cursor.svg">
+
+<!-- JavaScript de toda la página -->
+<script src="codigos/script.js"></script>
+</body>
+</html>
